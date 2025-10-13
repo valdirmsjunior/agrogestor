@@ -1,0 +1,74 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    container_name: agro_app
+    restart: unless-stopped
+    working_dir: /var/www/backend
+    volumes:
+      - ./backend:/var/www/backend
+      - ./docker/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
+    networks:
+      - agro_network
+    depends_on:
+      - db
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: agro_db
+      DB_USERNAME: agro_user
+      DB_PASSWORD: agro_pass
+
+  db:
+    image: postgres:16-alpine
+    container_name: agro_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: agro_db
+      POSTGRES_USER: agro_user
+      POSTGRES_PASSWORD: agro_pass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - agro_network
+
+  # Serviço do Nginx (proxy para Laravel)
+  nginx:
+    image: nginx:alpine
+    container_name: agro_nginx
+    ports:
+      - "8000:80"
+    volumes:
+      - ./backend:/var/www/backend
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - agro_network
+    depends_on:
+      - app
+
+  # Serviço do Frontend (Vue 3 + Vite)
+  vue:
+    image: node:20-alpine
+    container_name: agro_vue
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev"
+    networks:
+      - agro_network
+
+volumes:
+  pgdata:
+
+networks:
+  agro_network:
+    driver: bridge
