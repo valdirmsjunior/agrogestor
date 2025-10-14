@@ -18,22 +18,12 @@ class ProdutorService
 
     public function getAll(int $perPage = 10): LengthAwarePaginator
     {
-        try {
-            return $this->produtorRepository->paginate($perPage);
-        } catch (Exception $e) {
-            throw new Exception('Erro ao listar produtores: ' . $e->getMessage());
-        }
+        return $this->produtorRepository->paginate($perPage);
     }
 
     public function getById(int $id): ?Produtor
     {
-        try {
-            return $this->produtorRepository->find($id);
-        } catch (ModelNotFoundException $e) {
-            return null;
-        } catch (Exception $e) {
-            throw new Exception('Erro ao buscar produtor: ' . $e->getMessage());
-        }
+        return $this->produtorRepository->find($id);
     }
 
     public function create(array $data): Produtor

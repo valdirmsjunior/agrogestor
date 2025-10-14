@@ -18,22 +18,12 @@ class PropriedadeService
 
     public function getAll(int $perPage = 10): LengthAwarePaginator
     {
-        try {
-            return $this->propriedadeRepository->paginate($perPage);
-        } catch (Exception $e) {
-            throw new Exception('Erro ao listar propriedades: ' . $e->getMessage());
-        }
+        return $this->propriedadeRepository->paginate($perPage);
     }
 
     public function getById(int $id): ?Propriedade
     {
-        try {
-            return $this->propriedadeRepository->find($id);
-        } catch (ModelNotFoundException $e) {
-            return null;
-        } catch (Exception $e) {
-            throw new Exception('Erro ao buscar propriedade: ' . $e->getMessage());
-        }
+        return $this->propriedadeRepository->find($id);
     }
 
     public function create(array $data): Propriedade
