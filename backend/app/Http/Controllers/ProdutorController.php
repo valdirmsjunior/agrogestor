@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProdutorRequest;
 use App\Http\Requests\UpdateProdutorRequest;
+use App\Http\Resources\Produtor\ProdutorCollection;
+use App\Http\Resources\Produtor\ProdutorResource;
 use App\Models\Produtor;
 use App\Services\ProdutorService;
+use Exception;
 use Illuminate\Http\JsonResponse;
 
 class ProdutorController extends Controller
@@ -16,42 +19,62 @@ class ProdutorController extends Controller
     }
     public function index(): JsonResponse
     {
-        return response()->json($this->service->getAll());
+        try {
+            $produtores = $this->service->getAll();
+            return new ProdutorCollection($produtores);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 
     public function store(StoreProdutorRequest $request): JsonResponse
     {
-        $data = $request->validated();
-        $data['data_cadastro'] = $data['data_cadastro'] ?? now()->toDateString();
-
-        $produtor = $this->service->create($data);
-        return response()->json($produtor, 201);
+        try {
+            $data = $request->validated();
+            $data['data_cadastro'] = $data['data_cadastro'] ?? now()->toDateString();
+            $produtor = $this->service->create($data);
+            return response()->json(new ProdutorResource($produtor), 201);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
+        }
     }
 
     public function show(string $id): JsonResponse
     {
-        $produtor = $this->service->getById($id);
-        if (!$produtor) {
-            return response()->json(['message' => 'Produtor não encontrado'], 404);
+        try {
+            $produtor = $this->service->getById($id);
+            if (!$produtor) {
+                return response()->json(['message' => 'Produtor não encontrado'], 404);
+            }
+            return response()->json(new ProdutorResource($produtor));
+        } catch (Exception $e) {
+            return response()->json(['message' => 'Erro ao buscar produtor'], 500);
         }
-        return response()->json($produtor);
     }
 
     public function update(UpdateProdutorRequest $request, int $id): JsonResponse
     {
-        $produtor = $this->service->update($id, $request->validated());
-        if (!$produtor) {
-            return response()->json(['message' => 'Produtor não encontrado'], 404);
+        try {
+            $produtor = $this->service->update($id, $request->validated());
+            if (!$produtor) {
+                return response()->json(['message' => 'Produtor não encontrado'], 404);
+            }
+            return response()->json(new ProdutorResource($produtor));
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
-        return response()->json($produtor);
     }
 
     public function destroy(int $id): JsonResponse
     {
-        $deleted = $this->service->delete($id);
-        if (!$deleted) {
-            return response()->json(['message' => 'Produtor não encontrado'], 404);
+        try {
+            $deleted = $this->service->delete($id);
+            if (!$deleted) {
+                return response()->json(['message' => 'Produtor não encontrado'], 404);
+            }
+            return response()->json(null, 204);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 422);
         }
-        return response()->json(null, 204);
     }
 }
