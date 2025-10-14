@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreProdutorRequest;
-use App\Http\Requests\UpdateProdutorRequest;
+use App\Http\Requests\Produtor\StoreProdutorRequest;
+use App\Http\Requests\Produtor\UpdateProdutorRequest;
 use App\Http\Resources\Produtor\ProdutorCollection;
 use App\Http\Resources\Produtor\ProdutorResource;
 use App\Models\Produtor;
@@ -17,7 +17,7 @@ class ProdutorController extends Controller
     {
         $this->service = $service;
     }
-    public function index(): JsonResponse
+    public function index()
     {
         try {
             $produtores = $this->service->getAll();
@@ -39,7 +39,7 @@ class ProdutorController extends Controller
         }
     }
 
-    public function show(string $id): JsonResponse
+    public function show(int $id): JsonResponse
     {
         try {
             $produtor = $this->service->getById($id);
