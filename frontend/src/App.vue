@@ -1,10 +1,18 @@
-<script setup lang="ts"></script>
-
 <template>
-  <div class="min-h-screen bg-gray-50 p-6">
-    <h1 class="text-3xl font-bold text-green-700">Sistema Agropecuário</h1>
-    <RouterView />
+  <div class="p-6">
+    <Card>
+      <template #title>Sistema Agropecuário</template>
+      <template #content>
+        <p class="mb-4">Tailwind + PrimeVue funcionando!</p>
+        <Button label="Clique aqui" icon="pi pi-check" />
+      </template>
+    </Card>
   </div>
 </template>
+
+<script setup lang="ts">
+import Card from 'primevue/card'
+import Button from 'primevue/button'
+</script>
 
 <style scoped></style>
