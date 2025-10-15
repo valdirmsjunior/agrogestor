@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6">
+  <!-- <div class="p-6">
     <Card>
       <template #title>Sistema Agropecuário</template>
       <template #content>
@@ -7,12 +7,13 @@
         <Button label="Clique aqui" icon="pi pi-check" />
       </template>
     </Card>
-  </div>
+  </div> -->
+  <RouterView />
 </template>
 
-<script setup lang="ts">
+<!-- <script setup lang="ts">
 import Card from 'primevue/card'
 import Button from 'primevue/button'
-</script>
+</script> -->
 
 <style scoped></style>
