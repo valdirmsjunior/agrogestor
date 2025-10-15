@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\UnidadeProducao;
 
+use App\Models\UnidadeProducao;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
@@ -22,6 +23,15 @@ class UpdateUnidadeProducaoRequest extends FormRequest
      */
     public function rules(): array
     {
+        $unidade = $this->route('unidade_producao');
+        if (!$unidade || !UnidadeProducao::where('id', $unidade)->exists()) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'Unidade de produção não encontrada.'
+                ], 404)
+            );
+        }
+
         return [
             'nome_cultura' => 'sometimes|required|string|max:255',
             'area_total_ha' => 'sometimes|required|numeric|min:0',

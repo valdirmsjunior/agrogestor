@@ -16,6 +16,15 @@ class UpdateRebanhoRequest extends FormRequest
 
     public function rules(): array
     {
+        $rebanho = $this->route('rebanho');
+        if (!$rebanho || !Rebanho::where('id', $rebanho)->exists()) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'Rebanho não encontrado.'
+                ], 404)
+            );
+        }
+
         return [
             'especie' => ['sometimes', 'required', Rule::in(Rebanho::ESPECIES_PERMITIDAS)],
             'quantidade' => 'sometimes|required|integer|min:1',

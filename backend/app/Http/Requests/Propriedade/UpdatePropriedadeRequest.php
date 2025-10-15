@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Propriedade;
 
+use App\Models\Propriedade;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
@@ -23,6 +24,15 @@ class UpdatePropriedadeRequest extends FormRequest
     public function rules(): array
     {
         $propriedade = $this->route('propriedade');
+
+        if (!$propriedade || !Propriedade::where('id', $propriedade)->exists()) {
+            throw new HttpResponseException(
+                response()->json([
+                    'message' => 'Propriedade não encontrada.'
+                ], 404)
+            );
+        }
+
         return [
             'nome' => 'sometimes|required|string|max:255',
             'municipio' => 'sometimes|required|string|max:100',

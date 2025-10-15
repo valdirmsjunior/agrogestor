@@ -21,6 +21,7 @@ class UnidadeProducaoController extends Controller
     {
         try {
             $unidades = $this->unidadeProducao->getAll();
+
             return new UnidadeProducaoCollection($unidades);
         } catch (Exception $e) {
             return response()->json(['message' => 'Erro ao buscar unidades de produção.'], 500);
@@ -48,6 +49,7 @@ class UnidadeProducaoController extends Controller
             if (!$unidade) {
                 return response()->json(['message' => 'Unidade de produção não encontrada'], 404);
             }
+
             return response()->json([
                 'message' => 'Unidade de produção listada com sucesso',
                 'data' => new UnidadeProducaoResource($unidade)
@@ -64,6 +66,7 @@ class UnidadeProducaoController extends Controller
             if (!$unidade) {
                 return response()->json(['message' => 'Unidade de produção não encontrada'], 404);
             }
+
             return response()->json([
                 'message' => 'Unidade de produção atualizada com sucesso',
                 'data' => new UnidadeProducaoResource($unidade)
