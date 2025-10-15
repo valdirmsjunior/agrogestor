@@ -14,8 +14,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', fn (Request $request) => $request->user());
 
-    Route::apiResource('produtores', ProdutorController::class);
-    Route::apiResource('propriedades', PropriedadeController::class);
-    Route::apiResource('unidades-producao', UnidadeProducaoController::class);
-    Route::apiResource('rebanhos', RebanhoController::class);
+    Route::apiResource('produtores', ProdutorController::class)->parameter('produtores', 'produtor');
+    Route::apiResource('propriedades', PropriedadeController::class)->parameter('propriedades', 'propriedade');
+    Route::apiResource('unidades-producao', UnidadeProducaoController::class)->parameter('unidades_producao', 'unidade_producao');
+    Route::apiResource('rebanhos', RebanhoController::class)->parameter('rebanhos', 'rebanho');
 });

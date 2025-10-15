@@ -6,11 +6,9 @@ use App\Http\Requests\UnidadeProducao\StoreUnidadeProducaoRequest;
 use App\Http\Requests\UnidadeProducao\UpdateUnidadeProducaoRequest;
 use App\Http\Resources\UnidadeProducao\UnidadeProducaoCollection;
 use App\Http\Resources\UnidadeProducao\UnidadeProducaoResource;
-use App\Models\UnidadeProducao;
 use App\Services\UnidadeProducaoService;
 use Exception;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class UnidadeProducaoController extends Controller
 {
@@ -33,7 +31,11 @@ class UnidadeProducaoController extends Controller
     {
         try {
             $unidade = $this->unidadeProducao->create($request->validated());
-            return response()->json(new UnidadeProducaoResource($unidade), 201);
+
+            return response()->json([
+                'message' => 'Unidade de produção criada com sucesso',
+                'data' => new UnidadeProducaoResource($unidade)
+            ], 201);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -46,7 +48,10 @@ class UnidadeProducaoController extends Controller
             if (!$unidade) {
                 return response()->json(['message' => 'Unidade de produção não encontrada'], 404);
             }
-            return response()->json(new UnidadeProducaoResource($unidade));
+            return response()->json([
+                'message' => 'Unidade de produção listada com sucesso',
+                'data' => new UnidadeProducaoResource($unidade)
+            ], 200);
         } catch (Exception $e) {
             return response()->json(['message' => 'Erro ao buscar unidade de produção.'], 500);
         }
@@ -59,7 +64,10 @@ class UnidadeProducaoController extends Controller
             if (!$unidade) {
                 return response()->json(['message' => 'Unidade de produção não encontrada'], 404);
             }
-            return response()->json(new UnidadeProducaoResource($unidade));
+            return response()->json([
+                'message' => 'Unidade de produção atualizada com sucesso',
+                'data' => new UnidadeProducaoResource($unidade)
+            ], 200);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -72,7 +80,8 @@ class UnidadeProducaoController extends Controller
             if (!$deleted) {
                 return response()->json(['message' => 'Unidade de produção não encontrada'], 404);
             }
-            return response()->json(null, 204);
+
+            return response()->json(['message' => 'Unidade de produção deletada com sucesso.'], 200);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

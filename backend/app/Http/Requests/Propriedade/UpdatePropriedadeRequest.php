@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Propriedade;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class UpdatePropriedadeRequest extends FormRequest
 {
@@ -30,5 +31,27 @@ class UpdatePropriedadeRequest extends FormRequest
             'area_total' => 'sometimes|required|numeric|min:0',
             'produtor_id' => 'sometimes|required|exists:produtores,id',
         ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'nome.required' => 'O campo nome é obrigatório.',
+            'municipio.required' => 'O campo município é obrigatório.',
+            'uf.required' => 'O campo UF é obrigatório.',
+            'uf.size' => 'A UF deve ter 2 caracteres.',
+            'area_total.required' => 'O campo área total é obrigatório.',
+            'area_total.numeric' => 'A área total deve ser um número.',
+            'area_total.min' => 'A área total deve ser maior ou igual a 0.',
+            'produtor_id.required' => 'O produtor é obrigatório.',
+            'produtor_id.exists' => 'O produtor informado não existe.',
+        ];
+    }
+
+    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json(['errors' => $validator->errors()], 422)
+        );
     }
 }

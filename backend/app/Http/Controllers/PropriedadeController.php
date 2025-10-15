@@ -33,7 +33,10 @@ class PropriedadeController extends Controller
         try {
             $data = $request->validated();
             $propriedade = $this->propriedadeService->create($data);
-            return response()->json(new PropriedadeResource($propriedade), 201);
+            return response()->json([
+                'message' => 'Propriedade adicionada com sucesso',
+                'data' => new PropriedadeResource($propriedade)
+            ], 201);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -59,7 +62,10 @@ class PropriedadeController extends Controller
             if (!$propriedade) {
                 return response()->json(['message' => 'Propriedade não encontrada'], 404);
             }
-            return response()->json(new PropriedadeResource($propriedade));
+            return response()->json([
+                'message' => 'Propriedade atualizada com sucesso',
+                'data' => new PropriedadeResource($propriedade)
+            ], 200);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -72,7 +78,7 @@ class PropriedadeController extends Controller
             if (!$deleted) {
                 return response()->json(['message' => 'Propriedade não encontrada'], 404);
             }
-            return response()->json(['message' => 'Propriedade deletada com sucesso.']);
+            return response()->json(['message' => 'Propriedade deletada com sucesso.'], 200);
         } catch (Exception $e) {
             return response()->json(['message' => 'Erro ao deletar propriedade'], 500);
         }

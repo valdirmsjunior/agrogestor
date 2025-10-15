@@ -15,13 +15,8 @@ class BaseCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
+            'message' => 'Operação realizada com sucesso',
             'data' => $this->collection,
-            'meta' => [
-                'total' => $this->total() ?? $this->collection->count(),
-                'per_page' => $this->perPage() ?? 10,
-                'current_page' => $this->currentPage() ?? 1,
-                'last_page' => $this->lastPage() ?? 1,
-            ],
         ];
     }
 }

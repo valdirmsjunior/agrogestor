@@ -33,7 +33,11 @@ class ProdutorController extends Controller
             $data = $request->validated();
             $data['data_cadastro'] = $data['data_cadastro'] ?? now()->toDateString();
             $produtor = $this->service->create($data);
-            return response()->json(new ProdutorResource($produtor), 201);
+
+            return response()->json([
+                'message' => 'Produtor adicionado com sucesso',
+                'data' => new ProdutorResource($produtor)
+            ], 201);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -46,7 +50,11 @@ class ProdutorController extends Controller
             if (!$produtor) {
                 return response()->json(['message' => 'Produtor não encontrado'], 404);
             }
-            return response()->json(new ProdutorResource($produtor));
+
+            return response()->json([
+                'message' => 'Produtor encontrado com sucesso',
+                'data' => new ProdutorResource($produtor)
+            ], 200);
         } catch (Exception $e) {
             return response()->json(['message' => 'Erro ao buscar produtor'], 500);
         }
@@ -59,7 +67,11 @@ class ProdutorController extends Controller
             if (!$produtor) {
                 return response()->json(['message' => 'Produtor não encontrado'], 404);
             }
-            return response()->json(new ProdutorResource($produtor));
+
+            return response()->json([
+                'message' => 'Produtor atualizado com sucesso',
+                'data' => new ProdutorResource($produtor)
+            ], 200);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -72,7 +84,7 @@ class ProdutorController extends Controller
             if (!$deleted) {
                 return response()->json(['message' => 'Produtor não encontrado'], 404);
             }
-            return response()->json(null, 204);
+            return response()->json(['message' => 'Produtor deletado com sucesso'], 200);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

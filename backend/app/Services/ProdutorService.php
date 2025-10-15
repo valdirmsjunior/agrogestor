@@ -3,10 +3,9 @@
 namespace App\Services;
 
 use App\Models\Produtor;
-use App\Repository\ProdutorRepository;
+use App\Repositories\ProdutorRepository;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 
 class ProdutorService

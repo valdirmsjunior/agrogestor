@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\Rebanho;
-use App\Repository\RebanhoRepository;
+use App\Repositories\RebanhoRepository;
 use Exception;
 use Illuminate\Database\QueryException;
 

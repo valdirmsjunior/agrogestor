@@ -34,7 +34,11 @@ class RebanhoController extends Controller
             $data = $request->validated();
             $data['data_atualizacao'] = $data['data_atualizacao'] ?? now()->toDateString();
             $rebanho = $this->rebanhoService->create($data);
-            return response()->json(new RebanhoResource($rebanho), 201);
+
+            return response()->json([
+                'message' => 'Rebanho criado com sucesso',
+                'data' => new RebanhoResource($rebanho)
+            ], 201);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -47,7 +51,11 @@ class RebanhoController extends Controller
             if (!$rebanho) {
                 return response()->json(['message' => 'Rebanho não encontrado'], 404);
             }
-            return response()->json(new RebanhoResource($rebanho));
+
+            return response()->json([
+                'message' => 'Rebanho encontrado com sucesso',
+                'data' => new RebanhoResource($rebanho)
+            ], 200);
         } catch (Exception $e) {
             return response()->json(['message' => 'Erro ao buscar rebanho.'], 500);
         }
@@ -62,7 +70,11 @@ class RebanhoController extends Controller
             if (!$rebanho) {
                 return response()->json(['message' => 'Rebanho não encontrado'], 404);
             }
-            return response()->json(new RebanhoResource($rebanho));
+
+            return response()->json([
+                'message' => 'Rebanho atualizado com sucesso',
+                'data' => new RebanhoResource($rebanho)
+            ], 200);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }
@@ -75,7 +87,8 @@ class RebanhoController extends Controller
             if (!$deleted) {
                 return response()->json(['message' => 'Rebanho não encontrado'], 404);
             }
-            return response()->json(null, 204);
+
+            return response()->json(['message' => 'Rebanho deletado com sucesso'], 200);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 422);
         }

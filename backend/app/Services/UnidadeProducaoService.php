@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\UnidadeProducao;
-use App\Repository\UnidadeProducaoRepository;
+use App\Repositories\UnidadeProducaoRepository;
 use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;

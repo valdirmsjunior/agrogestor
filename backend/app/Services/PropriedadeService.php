@@ -6,7 +6,6 @@ use App\Models\Propriedade;
 use App\Repositories\PropriedadeRepository;
 use Exception;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 
 class PropriedadeService
