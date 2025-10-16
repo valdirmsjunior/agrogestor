@@ -15,9 +15,9 @@ class ProdutorService
         $this->produtorRepository = $produtorRepository;
     }
 
-    public function getAll(int $perPage = 10): LengthAwarePaginator
+    public function getAll(int $perPage = 10, array $filters = [], ?array $sort = null): LengthAwarePaginator
     {
-        return $this->produtorRepository->paginate($perPage);
+        return $this->produtorRepository->paginateWithFilters($perPage, $filters, $sort);
     }
 
     public function getById(int $id): ?Produtor

@@ -2,7 +2,6 @@
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-6">Produtores</h1>
 
-    <!-- Filtros -->
     <div class="bg-white p-4 rounded-lg shadow mb-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <InputText
@@ -19,7 +18,6 @@
       </div>
     </div>
 
-    <!-- Tabela -->
     <Card>
       <template #title>
         <div class="flex justify-between items-center">
@@ -33,7 +31,7 @@
           :paginator="true"
           :rows="10"
           :total-records="totalRecords"
-          :lazy="false"
+          :lazy="true"
           :loading="loading"
           @page="onPage"
           @sort="onSort"
@@ -135,6 +133,7 @@ const onSort = (event: DataTableSortEvent) => {
 }
 
 const onPage = (event: DataTablePageEvent) => {
+  console.log('Evento de paginação:', event)
   loadData(event.page + 1)
 }
 

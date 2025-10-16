@@ -10,6 +10,7 @@ use App\Models\Produtor;
 use App\Services\ProdutorService;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class ProdutorController extends Controller
 {
@@ -17,10 +18,28 @@ class ProdutorController extends Controller
     {
         $this->service = $service;
     }
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $produtores = $this->service->getAll();
+            $filters = [
+                'nome' => $request->get('nome'),
+                'municipio' => $request->get('municipio'),
+            ];
+
+            $filters = array_filter($filters, fn ($value) => trim($value) !== '');
+
+            $allowedSorts = ['id', 'nome', 'cpf_cnpj', 'email', 'telefone', 'created_at'];
+            $sort = null;
+            if ($request->filled('sort') && in_array($request->sort, $allowedSorts)) {
+                $sort = [
+                    'field' => $request->sort,
+                    'order' => $request->get('order', 'asc') === 'desc' ? 'desc' : 'asc'
+                ];
+            }
+
+            $perPage = (int) $request->get('per_page', 10);
+
+            $produtores = $this->service->getAll($perPage, $filters, $sort);
             return new ProdutorCollection($produtores);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);
