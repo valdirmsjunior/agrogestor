@@ -1,36 +1,40 @@
 // src/utils/errorHandler.ts
 import type { AxiosError } from 'axios'
-import type { ApiError } from '@/types/api'
 
 export function extractErrorMessage(error: unknown): string {
-  if (error instanceof Error) {
-    return error.message
-  }
 
   if (typeof error === 'object' && error !== null && 'isAxiosError' in error) {
-    const axiosError = error as AxiosError<ApiError>
+    const axiosError = error as AxiosError
 
     if (axiosError.response) {
       const data = axiosError.response.data
 
-      if (data?.errors && typeof data.errors === 'object') {
-        const firstField = Object.keys(data.errors)[0]
-        if (
-          firstField &&
-          Array.isArray(data.errors[firstField]) &&
-          data.errors[firstField].length > 0 &&
-          typeof data.errors[firstField][0] === 'string'
-        ) {
-          return data.errors[firstField][0]
+      if (data && typeof data === 'object' && 'message' in data) {
+        const message = data.message
+        if (typeof message === 'string') {
+          return message
         }
       }
 
-      if (typeof data?.message === 'string') {
-        return data.message
+      if (data && typeof data === 'object' && 'errors' in data) {
+        const errors = data.errors as Record<string, unknown[]>
+        const firstField = Object.keys(errors)[0]
+        if (
+          firstField &&
+          Array.isArray(errors[firstField]) &&
+          errors[firstField].length > 0 &&
+          typeof errors[firstField][0] === 'string'
+        ) {
+          return errors[firstField][0]
+        }
       }
     }
 
-    return 'Erro de conexão com o servidor'
+    return 'Erro ao conectar com o servidor'
+  }
+
+  if (error instanceof Error) {
+    return error.message
   }
 
   return 'Erro desconhecido'

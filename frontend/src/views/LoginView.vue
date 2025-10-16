@@ -40,6 +40,9 @@
             :disabled="loading"
           />
         </form>
+        <small v-if="authStore.errorMessage" class="p-error text-xs mt-2 block">
+          {{ authStore.errorMessage }}
+        </small>
       </template>
     </Card>
   </div>
