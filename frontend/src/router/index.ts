@@ -48,6 +48,24 @@ const router = createRouter({
       component: () => import('../views/PropriedadeFormView.vue'),
       beforeEnter: authGuard
     },
+    {
+      path: '/unidades-producao',
+      name: 'unidades-producao',
+      component: () => import('../views/UnidadesProducaoView.vue'),
+      beforeEnter: authGuard
+    },
+    {
+      path: '/unidades-producao/novo',
+      name: 'unidades-producao.novo',
+      component: () => import('../views/UnidadeProducaoFormView.vue'),
+      beforeEnter: authGuard
+    },
+    {
+      path: '/unidades-producao/:id/editar',
+      name: 'unidades-producao.editar',
+      component: () => import('../views/UnidadeProducaoFormView.vue'),
+      beforeEnter: authGuard
+    },
     { path: '/', redirect: '/produtores' }
   ]
 })

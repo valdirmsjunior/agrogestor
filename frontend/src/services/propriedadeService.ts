@@ -23,8 +23,6 @@ export const propriedadeService = {
   },
 
   async create(data: PropriedadeFormData) {
-    // const response = await api.post<Propriedade>('/propriedades', data)
-    // return response.data
     const payload = {
       ...data,
       area_total: Number(data.area_total)

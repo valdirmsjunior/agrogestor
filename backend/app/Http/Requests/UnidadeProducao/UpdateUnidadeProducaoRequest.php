@@ -23,7 +23,7 @@ class UpdateUnidadeProducaoRequest extends FormRequest
      */
     public function rules(): array
     {
-        $unidade = $this->route('unidade_producao');
+        $unidade = $this->route('unidades_producao');
         if (!$unidade || !UnidadeProducao::where('id', $unidade)->exists()) {
             throw new HttpResponseException(
                 response()->json([
