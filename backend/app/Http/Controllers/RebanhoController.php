@@ -18,10 +18,28 @@ class RebanhoController extends Controller
         $this->rebanhoService = $rebanhoService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $rebanhos = $this->rebanhoService->getAll();
+            $filters = [
+                'especie' => $request->get('especie'),
+                'municipio' => $request->get('municipio'),
+            ];
+
+            $filters = array_filter($filters, fn ($value) => trim($value) !== '');
+            $allowedSorts = ['id', 'especie', 'quantidade', 'finalidade', 'data_atualizacao', 'propriedade_id'];
+            $sort = null;
+
+            if ($request->filled('sort') && in_array($request->sort, $allowedSorts)) {
+                $sort = [
+                    'field' => $request->sort,
+                    'order' => $request->get('order', 'asc') === 'desc' ? 'desc' : 'asc'
+                ];
+            }
+
+            $perPage = (int) $request->get('per_page', 10);
+
+            $rebanhos = $this->rebanhoService->getAll($perPage, $filters, $sort);
             return new RebanhoCollection($rebanhos);
         } catch (Exception $e) {
             return response()->json(['message' => 'Erro ao buscar rebanhos.'], 500);

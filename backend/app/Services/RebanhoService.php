@@ -14,9 +14,9 @@ class RebanhoService
         $this->rebanhoRepository = $rebanhoRepository;
     }
 
-    public function getAll(int $perPage = 10)
+    public function getAll(int $perPage = 10, array $filters = [], ?array $sort = [])
     {
-        return $this->rebanhoRepository->paginate($perPage);
+        return $this->rebanhoRepository->paginateWithFilters($perPage, $filters, $sort);
     }
 
     public function getById(int $id): ?Rebanho

@@ -139,7 +139,7 @@ const loadProdutor = async () => {
       email: produtor.email,
       telefone: produtor.telefone,
       endereco: produtor.endereco,
-      data_cadastro: produtor.data_cadastro ? new Date(produtor.data_cadastro) : undefined
+      data_cadastro: produtor.data_cadastro ? parseISODateToLocalDate(produtor.data_cadastro) : undefined
     }
   } catch (error) {
     const message = extractErrorMessage(error)
@@ -157,6 +157,11 @@ const dataCadastro = computed<Date | undefined>({
     form.value.data_cadastro = value ? value.toISOString() : ''
   }
 })
+
+function parseISODateToLocalDate(dateString: string): Date {
+  const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
 
 const handleSubmit = async () => {
   loading.value = true
