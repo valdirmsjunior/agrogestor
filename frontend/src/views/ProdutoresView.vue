@@ -1,9 +1,9 @@
 <template>
   <div class="p-6">
-    <h1 class="text-2xl font-bold mb-6">Produtores</h1>
+    <h1 class="mb-6 text-2xl font-bold">Produtores</h1>
 
-    <div class="bg-white p-4 rounded-lg shadow mb-6">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="p-4 mb-6 bg-white rounded-lg shadow">
+      <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
         <InputText
           v-model="filters.nome"
           placeholder="Nome"
@@ -20,7 +20,7 @@
 
     <Card>
       <template #title>
-        <div class="flex justify-between items-center">
+        <div class="flex items-center justify-between">
           <span>Lista de Produtores</span>
           <Button label="Novo Produtor" icon="pi pi-plus" @click="() => router.push('/produtores/novo')" />
         </div>
@@ -133,7 +133,6 @@ const onSort = (event: DataTableSortEvent) => {
 }
 
 const onPage = (event: DataTablePageEvent) => {
-  console.log('Evento de paginação:', event)
   loadData(event.page + 1)
 }
 

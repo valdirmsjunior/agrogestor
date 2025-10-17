@@ -18,10 +18,29 @@ class PropriedadeController extends Controller
         $this->propriedadeService = $propriedadeService;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $propriedades = $this->propriedadeService->getAll();
+            $filters = [
+                'nome' => $request->get('nome'),
+                'municipio' => $request->get('municipio'),
+            ];
+
+            $filters = array_filter($filters, fn ($value) => trim($value) !== '');
+
+            $allowedSorts = ['id', 'nome', 'municipio', 'uf', 'inscricao_estadual', 'produtor_id'];
+            $sort = null;
+
+            if ($request->filled('sort') && in_array($request->sort, $allowedSorts)) {
+                $sort = [
+                    'field' => $request->sort,
+                    'order' => $request->get('order', 'asc') === 'desc' ? 'desc' : 'asc'
+                ];
+            }
+
+            $perPage = (int) $request->get('per_page', 10);
+
+            $propriedades = $this->propriedadeService->getAll($perPage, $filters, $sort);
             return new PropriedadeCollection($propriedades);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage()], 500);

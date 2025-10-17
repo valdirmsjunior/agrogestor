@@ -15,9 +15,9 @@ class PropriedadeService
         $this->propriedadeRepository = $propriedadeRepository;
     }
 
-    public function getAll(int $perPage = 10): LengthAwarePaginator
+    public function getAll(int $perPage = 10, array $filters = [], ?array $sort = []): LengthAwarePaginator
     {
-        return $this->propriedadeRepository->paginate($perPage);
+        return $this->propriedadeRepository->paginateWithFilters($perPage, $filters, $sort);
     }
 
     public function getById(int $id): ?Propriedade

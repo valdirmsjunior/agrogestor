@@ -17,6 +17,28 @@ class PropriedadeRepository
         return $this->propriedade->with(['produtor', 'unidadesProducao', 'rebanhos'])->paginate($perPage);
     }
 
+    public function paginateWithFilters(int $perPage = 10, array $filters = [], ?array $sort = null): LengthAwarePaginator
+    {
+        $query = $this->propriedade->newQuery();
+
+        if (!empty($filters['nome']) && trim($filters['nome']) !== '') {
+            $query->where('nome', 'ilike', '%' . trim($filters['nome']) . '%');
+        }
+        if (!empty($filters['municipio']) && trim($filters['municipio']) !== '') {
+            $query->where('municipio', 'ilike', '%' . trim($filters['municipio']) . '%');
+        }
+
+        if (!empty($sort['field']) && !empty($sort['order'])) {
+            $order = strtolower($sort['order']);
+            if (!in_array($order, ['asc', 'desc'])) {
+                $order = 'asc';
+            }
+            $query->orderBy($sort['field'], $order);
+        }
+
+        return $query->with(['produtor', 'unidadesProducao', 'rebanhos'])->paginate($perPage);
+    }
+
     public function find(int $id): ?Propriedade
     {
         return $this->propriedade->with(['produtor', 'unidadesProducao', 'rebanhos'])->find($id);

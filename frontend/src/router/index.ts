@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import ProdutoresView from '../views/ProdutoresView.vue'
+import PropriedadesView from '../views/PropriedadesView.vue'
 import authGuard from './middleware/auth'
 
 const router = createRouter({
@@ -27,6 +28,24 @@ const router = createRouter({
       path: '/produtores/:id/editar',
       name: 'produtores.editar',
       component: () => import('../views/ProdutorFormView.vue'),
+      beforeEnter: authGuard
+    },
+    {
+      path: '/propriedades',
+      name: 'propriedades',
+      component: PropriedadesView,
+      beforeEnter: authGuard
+    },
+    {
+      path: '/propriedades/novo',
+      name: 'propriedades.novo',
+      component: () => import('../views/PropriedadeFormView.vue'),
+      beforeEnter: authGuard
+    },
+    {
+      path: '/propriedades/:id/editar',
+      name: 'propriedades.editar',
+      component: () => import('../views/PropriedadeFormView.vue'),
       beforeEnter: authGuard
     },
     { path: '/', redirect: '/produtores' }
