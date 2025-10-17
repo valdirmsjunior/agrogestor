@@ -20,3 +20,11 @@ export interface ApiPaginatedResponse<T> {
   }
 }
 
+export interface ProdutorFormData {
+  nome: string
+  cpf_cnpj: string
+  email: string
+  telefone: string
+  endereco: string
+  data_cadastro?: Date | string | undefined
+}

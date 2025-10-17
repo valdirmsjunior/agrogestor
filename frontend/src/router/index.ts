@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import ProdutoresView from '../views/ProdutoresView.vue'
-import { useAuthStore } from '../stores/auth'
+import authGuard from './middleware/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,14 +15,19 @@ const router = createRouter({
       path: '/produtores',
       name: 'produtores',
       component: ProdutoresView,
-      beforeEnter: (to, from, next) => {
-        const authStore = useAuthStore()
-        if (authStore.isAuthenticated()) {
-          next()
-        } else {
-          next('/login')
-        }
-      }
+      beforeEnter: authGuard
+    },
+    {
+      path: '/produtores/novo',
+      name: 'produtores.novo',
+      component: () => import('../views/ProdutorFormView.vue'),
+      beforeEnter: authGuard
+    },
+    {
+      path: '/produtores/:id/editar',
+      name: 'produtores.editar',
+      component: () => import('../views/ProdutorFormView.vue'),
+      beforeEnter: authGuard
     },
     { path: '/', redirect: '/produtores' }
   ]
