@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExportacaoContoller;
 use App\Http\Controllers\ProdutorController;
 use App\Http\Controllers\PropriedadeController;
 use App\Http\Controllers\RebanhoController;
@@ -21,4 +22,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('rebanhos', RebanhoController::class)->parameter('rebanhos', 'rebanho');
 
     Route::get('/relatorios', [RelatorioController::class, 'index']);
+    Route::get('/export/propriedades', [ExportacaoContoller::class, 'propriedades']);
 });

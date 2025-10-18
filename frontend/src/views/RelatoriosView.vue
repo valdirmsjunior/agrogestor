@@ -70,7 +70,6 @@ const loadRelatorios = async () => {
   loading.value = true
   try {
     const data = await relatorioService.getRelatorios()
-    console.log("Relatorio load: ", data)
     relatorios.value = data
   } catch (error) {
     const message = extractErrorMessage(error)

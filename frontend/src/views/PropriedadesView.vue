@@ -23,7 +23,15 @@
     <template #title>
       <div class="flex items-center justify-between">
         <span>Lista de Propriedades</span>
-        <Button label="Adicionar Propriedade" icon="pi pi-plus" @click="() => router.push('/propriedades/novo')" />
+        <div class="flex space-x-2">
+          <Button
+            icon="pi pi-file-excel"
+            label="Exportar Excel"
+            severity="success"
+            @click="exportarExcel"
+          />
+          <Button label="Adicionar Propriedade" icon="pi pi-plus" @click="() => router.push('/propriedades/novo')" />
+        </div>
       </div>
     </template>
     <template #content>
@@ -91,6 +99,7 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
+import api from '../services/api'
 
 const router = useRouter()
 const confirm = useConfirm()
@@ -121,6 +130,27 @@ const loadData = async (page: number = 1) => {
     toast.add({ severity: 'error', summary: 'Erro', detail: message, life: 3000 })
   } finally {
     loading.value = false
+  }
+}
+
+
+const exportarExcel = async () => {
+  try {
+    const response = await api.get('/export/propriedades', {
+      responseType: 'blob'
+    })
+
+    // Cria um link de download
+    const url = window.URL.createObjectURL(new Blob([response.data]))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'propriedades.xlsx')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  } catch (error) {
+    const message = extractErrorMessage(error)
+    toast.add({ severity: 'error', summary: 'Erro', detail: message, life: 3000 })
   }
 }
 
