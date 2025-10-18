@@ -3,13 +3,14 @@
     <!-- Sidebar -->
     <aside class="flex flex-col px-4 py-8 bg-white shadow-lg w-60">
       <h2 class="mb-8 text-xl font-bold text-green-700">AgroGestor</h2>
+      <hr class="mb-10">
       <nav class="flex-1">
         <ul class="space-y-1">
           <li>
             <RouterLink
               to="/produtores"
-              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-blue-600"
-              :class="{ 'bg-blue-100 text-blue-700 font-bold': isActive('/produtores') }"
+              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-gray-600"
+              :class="{ 'bg-gray-100 text-gray-700 font-bold': isActive('/produtores') }"
             >
               <i class="mr-3 text-lg pi pi-users"></i>
               Produtores
@@ -18,8 +19,8 @@
           <li>
             <RouterLink
               to="/propriedades"
-              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-blue-600"
-              :class="{ 'bg-blue-100 text-blue-700 font-bold': isActive('/propriedades') }"
+              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-gray-600"
+              :class="{ 'bg-gray-100 text-gray-700 font-bold': isActive('/propriedades') }"
             >
               <i class="mr-3 text-lg pi pi-home"></i>
               Propriedades
@@ -28,8 +29,8 @@
           <li>
             <RouterLink
               to="/unidades-producao"
-              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-blue-600"
-              :class="{ 'bg-blue-100 text-blue-700 font-bold': isActive('/unidades-producao') }"
+              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-gray-600"
+              :class="{ 'bg-gray-100 text-gray-700 font-bold': isActive('/unidades-producao') }"
             >
               <i class="mr-3 text-lg pi pi-sliders-h"></i>
               Unidades de Produção
@@ -38,8 +39,8 @@
           <li>
             <RouterLink
               to="/rebanhos"
-              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-blue-600"
-              :class="{ 'bg-blue-100 text-blue-700 font-bold': isActive('/rebanhos') }"
+              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-gray-600"
+              :class="{ 'bg-gray-100 text-gray-700 font-bold': isActive('/rebanhos') }"
             >
               <i class="mr-3 text-lg pi pi-verified"></i>
               Rebanhos

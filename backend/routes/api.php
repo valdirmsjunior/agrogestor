@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProdutorController;
 use App\Http\Controllers\PropriedadeController;
 use App\Http\Controllers\RebanhoController;
+use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\UnidadeProducaoController;
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -18,4 +19,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('propriedades', PropriedadeController::class)->parameter('propriedades', 'propriedade');
     Route::apiResource('unidades-producao', UnidadeProducaoController::class)->parameter('unidades_producao', 'unidade_producao');
     Route::apiResource('rebanhos', RebanhoController::class)->parameter('rebanhos', 'rebanho');
+
+    Route::get('/relatorios', [RelatorioController::class, 'index']);
 });
