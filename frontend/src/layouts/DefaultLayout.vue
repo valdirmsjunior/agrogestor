@@ -46,6 +46,16 @@
               Rebanhos
             </RouterLink>
           </li>
+          <li>
+            <RouterLink
+              to="/relatorios"
+              class="flex items-center px-3 py-2 text-gray-700 transition-colors rounded hover:bg-blue-100 hover:text-gray-600"
+              :class="{ 'bg-gray-100 text-gray-700 font-bold': isActive('/relatorios') }"
+            >
+              <i class="mr-3 text-lg pi pi-chart-bar"></i>
+              Relatórios
+            </RouterLink>
+          </li>
         </ul>
       </nav>
     </aside>

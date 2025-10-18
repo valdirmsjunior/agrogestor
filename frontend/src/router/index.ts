@@ -10,6 +10,7 @@ import ProdutorFormView from '../views/ProdutorFormView.vue'
 import PropriedadeFormView from '../views/PropriedadeFormView.vue'
 import UnidadeProducaoFormView from '../views/UnidadeProducaoFormView.vue'
 import RebanhoFormView from '../views/RebanhoFormView.vue'
+import RelatoriosView from '../views/RelatoriosView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -89,6 +90,12 @@ const router = createRouter({
       path: '/rebanhos/:id/editar',
       name: 'rebanhos.editar',
       component: DefaultLayout, children: [{ path: '', component: RebanhoFormView}],
+      beforeEnter: authGuard
+    },
+    {
+      path: '/relatorios',
+      name: 'relatorios',
+      component: DefaultLayout, children: [{ path: '', component:RelatoriosView}],
       beforeEnter: authGuard
     },
     { path: '/', redirect: '/produtores' }
