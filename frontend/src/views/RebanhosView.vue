@@ -22,11 +22,31 @@
     </div>
   </div>
 
+  <div class="p-4 mb-6 bg-white rounded-lg shadow">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+
+    </div>
+  </div>
+
   <Card>
     <template #title>
       <div class="flex items-center justify-between">
         <span>Lista de Rebanhos</span>
-        <Button label="Adicionar Rebanho" icon="pi pi-plus" @click="() => router.push('/rebanhos/novo')" />
+        <div class="flex space-x-2">
+          <div class="flex items-center space-x-2">
+            <Button
+              icon="pi pi-file-pdf"
+              label="Exportar PDF"
+              severity="danger"
+              @click="exportarPdf"
+            />
+          </div>
+          <Button
+            label="Adicionar Rebanho"
+            icon="pi pi-plus"
+            @click="() => router.push('/rebanhos/novo')"
+          />
+        </div>
       </div>
     </template>
     <template #content>
@@ -101,6 +121,7 @@ import Button from 'primevue/button'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import Dropdown from 'primevue/dropdown'
+import api from '../services/api'
 
 
 const router = useRouter()
@@ -120,6 +141,24 @@ const filters = ref({
 
 const sortField = ref<string | null>(null)
 const sortOrder = ref<'asc' | 'desc' | null>(null)
+
+const exportarPdf = async () => {
+  try {
+    const response = await api.get('/export/rebanhos', {
+      responseType: 'blob'
+    })
+    const url = window.URL.createObjectURL(new Blob([response.data], { type: 'application/pdf' }))
+    const link = document.createElement('a')
+    link.href = url
+    link.setAttribute('download', 'rebanhos_por_produtor.pdf')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  } catch (error) {
+    const message = extractErrorMessage(error)
+    toast.add({ severity: 'error', summary: 'Erro', detail: message, life: 3000 })
+  }
+}
 
 const loadData = async (page: number = 1) => {
   loading.value = true

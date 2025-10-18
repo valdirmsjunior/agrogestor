@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\ExportacaoService;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class ExportacaoContoller extends Controller
+class ExportacaoController extends Controller
 {
     public function __construct(protected ExportacaoService $exportacaoService)
     {
@@ -15,5 +15,10 @@ class ExportacaoContoller extends Controller
     public function propriedades(): BinaryFileResponse
     {
         return $this->exportacaoService->exportarPropriedades();
+    }
+
+    public function rebanhos()
+    {
+        return $this->exportacaoService->exportarRebanhosPorProdutor();
     }
 }

@@ -18,11 +18,6 @@ class ProdutorRepository
         return $this->produtor->all();
     }
 
-    public function paginate(int $perPage = 10): LengthAwarePaginator
-    {
-        return $this->produtor->with('propriedades')->paginate($perPage);
-    }
-
     public function paginateWithFilters(int $perPage = 10, array $filters = [], ?array $sort = null): LengthAwarePaginator
     {
         $query = $this->produtor->newQuery();
@@ -67,5 +62,12 @@ class ProdutorRepository
     public function delete(Produtor $produtor): void
     {
         $produtor->delete();
+    }
+
+    public function getProdutoresPorRebanho(): Collection
+    {
+        $produtores = Produtor::whereHas('propriedades.rebanhos')->with('propriedades.rebanhos')->get();
+
+        return $produtores;
     }
 }

@@ -4,17 +4,13 @@ namespace App\Repositories;
 
 use App\Models\Rebanho;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class RebanhoRepository
 {
     public function __construct(protected Rebanho $rebanho)
     {
         $this->rebanho = $rebanho;
-    }
-
-    public function paginate(int $perPage = 10): LengthAwarePaginator
-    {
-        return $this->rebanho->with('propriedade')->paginate($perPage);
     }
 
     public function paginateWithFilters(int $perPage = 10, array $filters = [], ?array $sort = null): LengthAwarePaginator
@@ -58,5 +54,12 @@ class RebanhoRepository
     public function delete(Rebanho $rebanho): void
     {
         $rebanho->delete();
+    }
+
+    public function getRebanhosPorProdutor(int $produtorId): Collection
+    {
+        return $this->rebanho
+            ->whereHas('propriedade', fn ($q) => $q->where('produtor_id', $produtorId))
+            ->get();
     }
 }
