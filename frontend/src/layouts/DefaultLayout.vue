@@ -49,6 +49,7 @@ function isActive(path: string) {
 }
 
 const menuItems = [
+  { to: '/dashboard', label: 'Dashboard', icon: 'pi-chart-pie' },
   { to: '/produtores', label: 'Produtores', icon: 'pi-users' },
   { to: '/propriedades', label: 'Propriedades', icon: 'pi-home' },
   { to: '/unidades-producao', label: 'Unidades de Produção', icon: 'pi-sliders-h' },

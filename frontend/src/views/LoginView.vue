@@ -70,7 +70,7 @@ const handleLogin = async () => {
 
   try {
     await authStore.login(email.value, password.value)
-    router.push('/produtores')
+    router.push('/dashboard')
   } catch (error) {
     const message = extractErrorMessage(error)
   errors.value = { email: [message] }

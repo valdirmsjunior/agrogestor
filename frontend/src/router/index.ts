@@ -11,6 +11,7 @@ import PropriedadeFormView from '../views/PropriedadeFormView.vue'
 import UnidadeProducaoFormView from '../views/UnidadeProducaoFormView.vue'
 import RebanhoFormView from '../views/RebanhoFormView.vue'
 import RelatoriosView from '../views/RelatoriosView.vue'
+import DashboardView from '@/views/DashboardView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,6 +20,12 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DefaultLayout, children: [{ path: '', component:DashboardView}],
+      beforeEnter: authGuard
     },
     {
       path: '/produtores',

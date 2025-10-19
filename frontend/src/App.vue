@@ -20,4 +20,5 @@ import UserMenu from '../src/components/layout/UserMenu.vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const authStore = useAuthStore()
+
 </script>
