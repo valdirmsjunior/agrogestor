@@ -5,12 +5,13 @@
     <Card>
       <template #content>
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
 
-            <div>
+            <div class="md:col-span-1">
               <label for="nome" class="block mb-1 text-sm font-medium text-gray-700">Nome *</label>
               <InputText
                 id="nome"
+                class="w-full p-4 text-lg"
                 v-model="form.nome"
                 :class="{ 'p-invalid': errors.nome }"
                 required
@@ -22,6 +23,7 @@
               <label for="cpf_cnpj" class="block mb-1 text-sm font-medium text-gray-700">CPF/CNPJ *</label>
               <InputText
                 id="cpf_cnpj"
+                class="w-full p-4 text-lg"
                 v-model="form.cpf_cnpj"
                 :class="{ 'p-invalid': errors.cpf_cnpj }"
                 required
@@ -38,6 +40,7 @@
               <label for="email" class="block mb-1 text-sm font-medium text-gray-700">E-mail *</label>
               <InputText
                 id="email"
+                class="w-full p-4 text-lg"
                 v-model="form.email"
                 type="email"
                 :class="{ 'p-invalid': errors.email }"
@@ -50,6 +53,7 @@
               <label for="telefone" class="block mb-1 text-sm font-medium text-gray-700">Telefone *</label>
               <InputText
                 id="telefone"
+                class="w-full p-4 text-lg"
                 v-model="form.telefone"
                 :class="{ 'p-invalid': errors.telefone }"
                 required
@@ -59,8 +63,9 @@
 
             <div class="md:col-span-2">
               <label for="endereco" class="block mb-1 text-sm font-medium text-gray-700">Endereço *</label>
-              <Textarea
+              <InputText
                 id="endereco"
+                class="w-full p-4 text-lg"
                 v-model="form.endereco"
                 :class="{ 'p-invalid': errors.endereco }"
                 required
@@ -110,7 +115,6 @@ import type { ProdutorFormData } from '../types/produtor'
 import { extractErrorMessage } from '../utils/errorHandler'
 import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
-import Textarea from 'primevue/textarea'
 import Calendar from 'primevue/calendar'
 import Button from 'primevue/button'
 

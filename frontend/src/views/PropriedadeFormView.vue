@@ -5,12 +5,13 @@
     <Card>
       <template #content>
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
 
-            <div>
+            <div class="md:col-span-1">
               <label for="nome" class="block mb-1 text-sm font-medium text-gray-700">Nome *</label>
               <InputText
                 id="nome"
+                class="w-full p-4 text-lg"
                 v-model="form.nome"
                 :class="{ 'p-invalid': errors.nome }"
                 required
@@ -22,6 +23,7 @@
               <label for="municipio" class="block mb-1 text-sm font-medium text-gray-700">Município *</label>
               <InputText
                 id="municipio"
+                class="w-full p-4 text-lg"
                 v-model="form.municipio"
                 :class="{ 'p-invalid': errors.municipio }"
                 required
@@ -45,6 +47,7 @@
               <label for="inscricao_estadual" class="block mb-1 text-sm font-medium text-gray-700">Inscrição Estadual *</label>
               <InputText
                 id="inscricao_estadual"
+                class="w-full p-4 text-lg"
                 v-model="form.inscricao_estadual"
                 :class="{ 'p-invalid': errors.inscricao_estadual }"
                 required
@@ -52,10 +55,11 @@
               <small v-if="errors.inscricao_estadual" class="text-xs p-error">{{ errors.inscricao_estadual[0] }}</small>
             </div>
 
-            <div class="md:col-span-2">
+            <div class="md:col-span-1">
               <label for="area_total" class="block mb-1 text-sm font-medium text-gray-700">Area Total *</label>
               <InputNumber
                 id="area_total"
+                class="w-full text-lg"
                 v-model="form.area_total"
                 :class="{ 'p-invalid': errors.area_total }"
                 mode="decimal"
@@ -66,10 +70,11 @@
               <small v-if="errors.area_total" class="text-xs p-error">{{ errors.area_total[0] }}</small>
             </div>
 
-            <div class="md:col-span-2">
+            <div class="mb-4 md:col-span-1">
               <label for="produtor_id" class="block mb-1 text-sm font-medium text-gray-700">Produtor *</label>
               <Dropdown
                 id="produtor_id"
+                class="w-full"
                 v-model="form.produtor_id"
                 :options="produtores"
                 filter

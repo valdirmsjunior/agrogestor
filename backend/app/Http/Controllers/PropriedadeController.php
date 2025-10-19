@@ -28,7 +28,7 @@ class PropriedadeController extends Controller
 
             $filters = array_filter($filters, fn ($value) => trim($value) !== '');
 
-            $allowedSorts = ['id', 'nome', 'municipio', 'uf', 'inscricao_estadual', 'produtor_id'];
+            $allowedSorts = ['id', 'nome', 'municipio', 'uf', 'area_total' , 'inscricao_estadual', 'produtor_id'];
             $sort = null;
 
             if ($request->filled('sort') && in_array($request->sort, $allowedSorts)) {

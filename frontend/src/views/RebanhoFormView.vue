@@ -5,12 +5,13 @@
     <Card>
       <template #content>
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
 
-            <div class="md:col-span-2">
+            <div class="md:col-span-1">
               <label for="especie" class="block mb-1 text-sm font-medium text-gray-700">Espécie *</label>
               <Dropdown
                 id="especie"
+                class="w-full"
                 v-model="form.especie"
                 :options="especies"
                 placeholder="Selecione uma espécie"
@@ -24,6 +25,7 @@
               <label for="quantidade" class="block mb-1 text-sm font-medium text-gray-700">Quantidade *</label>
               <InputNumber
                 id="quantidade"
+                class="w-full"
                 v-model="form.quantidade"
                 :class="{ 'p-invalid': errors.quantidade }"
                 :min="0"
@@ -36,6 +38,7 @@
               <label for="finalidade" class="block mb-1 text-sm font-medium text-gray-700">Finalidade *</label>
               <InputText
                 id="finalidade"
+                class="w-full p-4 text-lg"
                 v-model="form.finalidade"
                 :class="{ 'p-invalid': errors.finalidade }"
                 required
@@ -43,10 +46,11 @@
               <small v-if="errors.finalidade" class="text-xs p-error">{{ errors.finalidade[0] }}</small>
             </div>
 
-            <div class="md:col-span-2">
+            <div class="md:col-span-1">
               <label for="propriedade_id" class="block mb-1 text-sm font-medium text-gray-700">Propriedade *</label>
               <Dropdown
                 id="propriedade_id"
+                class="w-full"
                 v-model="form.propriedade_id"
                 :options="propriedades"
                 filter
@@ -63,6 +67,7 @@
               <label for="data_atualizacao" class="block mb-1 text-sm font-medium text-gray-700">Data de Atualização</label>
               <Calendar
                 id="data_atualizacao"
+                class="w-full"
                 v-model="dataAtualizacao"
                 dateFormat="dd/mm/yy"
                 :showIcon="true"
@@ -70,7 +75,7 @@
               />
             </div>
           </div>
-          <div class="flex justify-end pt-4 space-x-3">
+          <div class="flex justify-end pt-6 space-x-3">
             <Button
               label="Cancelar"
               severity="secondary"

@@ -5,12 +5,13 @@
     <Card>
       <template #content>
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
 
-            <div class="md:col-span-2">
+            <div class="md:col-span-1">
               <label for="nome_cultura" class="block mb-1 text-sm font-medium text-gray-700">Cultura *</label>
               <Dropdown
                 id="nome_cultura"
+                class="w-full"
                 v-model="form.nome_cultura"
                 :options="culturas"
                 placeholder="Selecione uma cultura"
@@ -18,6 +19,23 @@
                 required
               />
               <small v-if="errors.nome_cultura" class="text-xs p-error">{{ errors.nome_cultura[0] }}</small>
+            </div>
+
+            <div class="md:col-span-1">
+              <label for="propriedade_id" class="block mb-1 text-sm font-medium text-gray-700">Propriedade *</label>
+              <Dropdown
+                id="propriedade_id"
+                class="w-full"
+                v-model="form.propriedade_id"
+                :options="propriedades"
+                filter
+                option-label="nome"
+                option-value="id"
+                placeholder="Selecione uma propriedade"
+                :class="{ 'p-invalid': errors.propriedade_id }"
+                required
+              />
+              <small v-if="errors.propriedade_id" class="text-xs p-error">{{ errors.propriedade_id[0] }}</small>
             </div>
 
             <div>
@@ -35,26 +53,10 @@
             </div>
 
             <div class="md:col-span-2">
-              <label for="propriedade_id" class="block mb-1 text-sm font-medium text-gray-700">Propriedade *</label>
-              <Dropdown
-                id="propriedade_id"
-                v-model="form.propriedade_id"
-                :options="propriedades"
-                filter
-                option-label="nome"
-                option-value="id"
-                placeholder="Selecione uma propriedade"
-                :class="{ 'p-invalid': errors.propriedade_id }"
-                required
-              />
-              <small v-if="errors.propriedade_id" class="text-xs p-error">{{ errors.propriedade_id[0] }}</small>
-            </div>
-
-            <div class="md:col-span-2">
-              <label class="block mb-1 text-sm font-medium text-gray-700">Coordenadas Geográficas</label>
-              <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <label class="block mb-2 text-sm font-medium text-gray-700">Coordenadas Geográficas:</label>
+              <div class="grid grid-cols-1 gap-2 mb-5 sm:grid-cols-2">
                 <div>
-                  <label for="lat" class="text-xs">Latitude</label>
+                  <label for="lat" class="text-xs">Latitude: </label>
                   <InputNumber
                     id="lat"
                     v-model="coordenadas.lat"
@@ -65,7 +67,7 @@
                   />
                 </div>
                 <div>
-                  <label for="lng" class="text-xs">Longitude</label>
+                  <label for="lng" class="text-xs">Longitude: </label>
                   <InputNumber
                     id="lng"
                     v-model="coordenadas.lng"

@@ -54,7 +54,7 @@
         <Column field="nome" header="Nome" :sortable="true"></Column>
         <Column field="municipio" header="Município" :sortable="true"></Column>
         <Column field="uf" header="UF" :sortable="true"></Column>
-        <Column field="area_total" header="Área Total(ha)" :sortable="true"></Column>
+        <Column field="area_total" header="Área Total" :sortable="true"></Column>
         <Column field="inscricao_estadual" header="Inscrição Estadual" :sortable="true"></Column>
         <Column field="produtor_id" header="Produtor" :sortable="true">
           <template #body="slotProps">
