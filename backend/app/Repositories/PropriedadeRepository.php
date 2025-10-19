@@ -34,6 +34,8 @@ class PropriedadeRepository
                 $order = 'asc';
             }
             $query->orderBy($sort['field'], $order);
+        } else {
+            $query->orderByDesc('created_at');
         }
 
         return $query->with(['produtor', 'unidadesProducao', 'rebanhos'])->paginate($perPage);

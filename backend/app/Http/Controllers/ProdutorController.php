@@ -23,7 +23,7 @@ class ProdutorController extends Controller
         try {
             $filters = [
                 'nome' => $request->get('nome'),
-                'municipio' => $request->get('municipio'),
+                'cpf_cnpj' => $request->get('cpf_cnpj'),
             ];
 
             $filters = array_filter($filters, fn ($value) => trim($value) !== '');

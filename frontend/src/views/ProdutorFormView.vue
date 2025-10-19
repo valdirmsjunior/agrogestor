@@ -25,8 +25,13 @@
                 v-model="form.cpf_cnpj"
                 :class="{ 'p-invalid': errors.cpf_cnpj }"
                 required
+                maxlength="14"
+                inputmode="numeric"
+                pattern="[0-9]*"
+                @input="justNumber"
+                placeholder="Digite somente numeros"
               />
-              <small v-if="errors.cpf_cnpj" class="text-xs p-error">{{ errors.cpf_cnpj[0] }}</small>
+              <small v-if="errors.cpf_cnpj" class="block mt-1 text-xs p-error">{{ errors.cpf_cnpj[0] }}</small>
             </div>
 
             <div>
@@ -38,7 +43,7 @@
                 :class="{ 'p-invalid': errors.email }"
                 required
               />
-              <small v-if="errors.email" class="text-xs p-error">{{ errors.email[0] }}</small>
+              <small v-if="errors.email" class="block mt-1 text-xs p-error">{{ errors.email[0] }}</small>
             </div>
 
             <div>
@@ -128,6 +133,12 @@ const form = ref<ProdutorFormData>({
 const errors = ref<Record<string, string[]>>({})
 const loading = ref(false)
 
+function justNumber(event: Event) {
+  const input = event.target as HTMLInputElement
+  input.value = input.value.replace(/\D/g, '').slice(0, 14)
+  form.value.cpf_cnpj = input.value
+}
+
 const loadProdutor = async () => {
   if (!isEditing.value) return
   try {
@@ -158,14 +169,32 @@ const dataCadastro = computed<Date | undefined>({
   }
 })
 
-function parseISODateToLocalDate(dateString: string): Date {
-  const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
-  return new Date(year, month - 1, day);
+function parseISODateToLocalDate(dateString: string): Date | undefined {
+  if (!dateString) return undefined
+
+  const [datePart] = dateString.split('T')
+  if (!datePart) return undefined
+
+  const [yearStr, monthStr, dayStr] = datePart.split('-')
+  const year = Number(yearStr), month = Number(monthStr), day = Number(dayStr)
+
+  if (!yearStr || !monthStr || !dayStr) return undefined
+  if (isNaN(year) || isNaN(month) || isNaN(day)) return undefined
+
+  return new Date(year, month - 1, day)
 }
 
 const handleSubmit = async () => {
   loading.value = true
   errors.value = {}
+
+  const cpfCnpj = form.value.cpf_cnpj
+  if (!/^\d{11}$/.test(cpfCnpj) && !/^\d{14}$/.test(cpfCnpj)) {
+    errors.value.cpf_cnpj = ['Digite um CPF (11 dígitos) ou CNPJ (14 dígitos) válido, somente números.']
+    loading.value = false
+    return
+  }
+
   try {
     if (isEditing.value) {
       await produtorService.update(produtorId.value, form.value)
@@ -174,6 +203,7 @@ const handleSubmit = async () => {
       await produtorService.create(form.value)
       toast.add({ severity: 'success', summary: 'Sucesso', detail: 'Produtor criado com sucesso.', life: 3000 })
     }
+
     router.push('/produtores')
   } catch (error: unknown) {
     if (error instanceof Error) {

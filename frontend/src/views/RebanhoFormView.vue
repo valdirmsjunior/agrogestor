@@ -169,9 +169,19 @@ const dataAtualizacao = computed<Date | undefined>({
   }
 })
 
-function parseISODateToLocalDate(dateString: string): Date {
-  const [year, month, day] = dateString.split('T')[0].split('-').map(Number);
-  return new Date(year, month - 1, day);
+function parseISODateToLocalDate(dateString: string): Date | undefined {
+  if (!dateString) return undefined
+
+  const [datePart] = dateString.split('T')
+  if (!datePart) return undefined
+
+  const [yearStr, monthStr, dayStr] = datePart.split('-')
+  const year = Number(yearStr), month = Number(monthStr), day = Number(dayStr)
+
+  if (!yearStr || !monthStr || !dayStr) return undefined
+  if (isNaN(year) || isNaN(month) || isNaN(day)) return undefined
+
+  return new Date(year, month - 1, day)
 }
 
 

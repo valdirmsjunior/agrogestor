@@ -36,6 +36,15 @@ class UpdateProdutorRequest extends FormRequest
         return [
             'nome' => 'sometimes|required|string|max:255',
             'cpf_cnpj' => 'sometimes|required|string|unique:produtores,cpf_cnpj,' . $produtor,
+                function ($attribute, $value, $fail) {
+                    $digits = preg_replace('/\D/', '', $value);
+                    if (!preg_match('/^\d{11}$|^\d{14}$/', $digits)) {
+                        $fail('O campo CPF/CNPJ deve ter 11 (CPF) ou 14 (CNPJ) dígitos numéricos.');
+                    }
+                    if ($digits !== $value) {
+                        $fail('O campo CPF/CNPJ deve conter apenas números, sem pontos ou traços.');
+                    }
+                },
             'telefone' => 'sometimes|required|string|max:20',
             'email' => 'sometimes|required|email|unique:produtores,email,' . $produtor,
             'endereco' => 'sometimes|required|string',

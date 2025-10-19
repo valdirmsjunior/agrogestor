@@ -10,8 +10,12 @@
           @keyup.enter="applyFilters"
         />
         <InputText
-          v-model="filters.municipio"
-          placeholder="Município"
+          v-model="filters.cpf_cnpj"
+          placeholder="CPF/CNPJ"
+          maxlength="14"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          @input="justNumber"
           @keyup.enter="applyFilters"
         />
         <Button label="Filtrar" icon="pi pi-search" @click="applyFilters" />
@@ -22,7 +26,7 @@
       <template #title>
         <div class="flex items-center justify-between">
           <span>Lista de Produtores</span>
-          <Button label="Novo Produtor" icon="pi pi-plus" @click="() => router.push('/produtores/novo')" />
+          <Button label="Adicionar Produtor" icon="pi pi-plus" @click="() => router.push('/produtores/novo')" />
         </div>
       </template>
       <template #content>
@@ -95,11 +99,17 @@ const loading = ref(false)
 const currentPage = ref(1)
 const filters = ref({
   nome: '',
-  municipio: ''
+  cpf_cnpj: ''
 })
 
 const sortField = ref<string | null>(null)
 const sortOrder = ref<'asc' | 'desc' | null>(null)
+
+function justNumber(event: Event) {
+  const input = event.target as HTMLInputElement
+  input.value = input.value.replace(/\D/g, '').slice(0, 14)
+  filters.value.cpf_cnpj = input.value
+}
 
 const loadData = async (page: number = 1) => {
   loading.value = true

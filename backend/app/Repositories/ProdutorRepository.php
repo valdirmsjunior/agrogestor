@@ -25,11 +25,8 @@ class ProdutorRepository
         if (!empty($filters['nome']) && trim($filters['nome']) !== '') {
             $query->where('nome', 'ilike', '%' . trim($filters['nome']) . '%');
         }
-        if (!empty($filters['municipio']) && trim($filters['municipio']) !== '') {
-            $municipio = trim($filters['municipio']);
-            $query->whereHas('propriedades', function ($q) use ($municipio) {
-                $q->where('municipio', 'ilike', '%' . $municipio . '%');
-            });
+        if (!empty($filters['cpf_cnpj']) && trim($filters['cpf_cnpj']) !== '') {
+            $query->where('cpf_cnpj', 'ilike', '%' . trim($filters['cpf_cnpj']) . '%');
         }
 
         if (!empty($sort['field']) && !empty($sort['order'])) {
@@ -38,6 +35,8 @@ class ProdutorRepository
                 $order = 'asc';
             }
             $query->orderBy($sort['field'], $order);
+        } else {
+            $query->orderByDesc('created_at');
         }
 
         return $query->with('propriedades')->paginate($perPage);
