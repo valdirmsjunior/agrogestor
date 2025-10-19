@@ -27,7 +27,7 @@ class RebanhoController extends Controller
             ];
 
             $filters = array_filter($filters, fn ($value) => trim($value) !== '');
-            $allowedSorts = ['id', 'especie', 'quantidade', 'finalidade', 'data_atualizacao', 'propriedade_id'];
+            $allowedSorts = ['id', 'especie', 'quantidade', 'finalidade', 'data_atualizacao', 'propriedade.nome', 'propriedade.municipio'];
             $sort = null;
 
             if ($request->filled('sort') && in_array($request->sort, $allowedSorts)) {

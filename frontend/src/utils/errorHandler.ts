@@ -1,4 +1,3 @@
-// src/utils/errorHandler.ts
 import type { AxiosError } from 'axios'
 
 export function extractErrorMessage(error: unknown): string {

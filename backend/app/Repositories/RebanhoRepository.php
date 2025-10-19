@@ -21,7 +21,10 @@ class RebanhoRepository
             $query->where('especie', 'ilike', '%' . trim($filters['especie']) . '%');
         }
         if (!empty($filters['municipio']) && trim($filters['municipio']) !== '') {
-            $query->where('municipio', 'ilike', '%' . trim($filters['municipio']) . '%');
+            $municipio = trim($filters['municipio']);
+            $query->whereHas('propriedade', function ($q) use ($municipio) {
+                $q->where('municipio', 'ilike', '%' . $municipio . '%');
+            });
         }
 
         if (!empty($sort['field']) && !empty($sort['order'])) {
@@ -29,7 +32,16 @@ class RebanhoRepository
             if (!in_array($order, ['asc', 'desc'])) {
                 $order = 'asc';
             }
-            $query->orderBy($sort['field'], $order);
+
+            if ($sort['field'] === 'propriedade.nome') {
+                $query->join('propriedades', 'rebanhos.propriedade_id', '=', 'propriedades.id')
+                    ->orderBy('propriedades.nome', $order);
+            } elseif ($sort['field'] === 'propriedade.municipio') {
+                $query->join('propriedades', 'rebanhos.propriedade_id', '=', 'propriedades.id')
+                    ->orderBy('propriedades.municipio', $order);
+            } else {
+                $query->orderBy($sort['field'], $order);
+            }
         } else {
             $query->orderByDesc('created_at');
         }

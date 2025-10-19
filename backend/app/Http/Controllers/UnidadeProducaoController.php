@@ -9,6 +9,7 @@ use App\Http\Resources\UnidadeProducao\UnidadeProducaoResource;
 use App\Services\UnidadeProducaoService;
 use Exception;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class UnidadeProducaoController extends Controller
 {
@@ -17,10 +18,28 @@ class UnidadeProducaoController extends Controller
         $this->unidadeProducao = $unidadeProducao;
     }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $unidades = $this->unidadeProducao->getAll();
+            $filters = [
+                'nome_cultura' => $request->get('nome_cultura'),
+                'propriedade' => $request->get('propriedade_id'),
+                'municipio' => $request->get('municipio')
+            ];
+
+            $filters = array_filter($filters, fn ($value) => trim($value) !== '');
+
+            $allowedSorts = ['id', 'nome_cultura', 'area_total_ha', 'coordenadas_geograficas', 'propriedade.nome', 'propriedade.municipio'];
+            $sort = null;
+            if ($request->filled('sort') && in_array($request->sort, $allowedSorts)) {
+                $sort = [
+                    'field' => $request->sort,
+                    'order' => $request->get('order', 'asc') === 'desc' ? 'desc' : 'asc'
+                ];
+            }
+
+            $perPage = (int) $request->get('per_page', 10);
+            $unidades = $this->unidadeProducao->getAll($perPage, $filters, $sort);
 
             return new UnidadeProducaoCollection($unidades);
         } catch (Exception $e) {

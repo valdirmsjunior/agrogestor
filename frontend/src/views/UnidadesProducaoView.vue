@@ -45,7 +45,7 @@
         <Column field="id" header="ID" style="width: 100px"></Column>
         <Column field="nome_cultura" header="Cultura" :sortable="true"></Column>
         <Column field="area_total_ha" header="Área Total (ha)" :sortable="true"></Column>
-        <Column field="coordenadas_geograficas" header="Coordenadas" :sortable="true">
+        <Column field="coordenadas_geograficas" header="Coordenadas" :sortable="false">
           <template #body="slotProps">
             <span v-if="slotProps.data.coordenadas_geograficas">
               Latitude: {{ slotProps.data.coordenadas_geograficas.lat }}, Longitude: {{ slotProps.data.coordenadas_geograficas.lng }}
@@ -128,7 +128,7 @@ const loadData = async (page: number = 1) => {
     const response = await unidadeProducaoService.getAll(page, filters.value, sort)
     unidades.value = response.data
     totalRecords.value = response.meta.total
-    currentPage.value = page
+    currentPage.value = response.meta.current_page
   } catch (error) {
     const message = extractErrorMessage(error)
     toast.add({ severity: 'error', summary: 'Erro', detail: message, life: 3000 })
@@ -144,6 +144,7 @@ const applyFilters = () => {
 const onSort = (event: DataTableSortEvent) => {
   if (typeof event.sortField === 'string') {
     sortField.value = event.sortField
+    sortOrder.value = event.sortOrder === 1 ? 'asc' : 'desc'
   } else {
     sortField.value = null
   }

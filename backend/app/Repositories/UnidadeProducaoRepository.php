@@ -12,9 +12,44 @@ class UnidadeProducaoRepository
         $this->unidadeProducao = $unidadeProducao;
     }
 
-    public function paginate(int $perPage = 10): LengthAwarePaginator
+    public function paginateWithFilters(int $perPage = 10, array $filters = [], ?array $sort = null): LengthAwarePaginator
     {
-        return $this->unidadeProducao->with('propriedade')->paginate($perPage);
+        \Log::info($filters);
+        $query = $this->unidadeProducao->newQuery();
+
+        if (!empty($filters['nome_cultura']) && trim($filters['nome_cultura']) !== '') {
+            $query->where('nome_cultura', 'ilike', '%' . trim($filters['nome_cultura']) . '%');
+        }
+        if (!empty($filters['propriedade']) && trim($filters['propriedade']) !== '') {
+            $query->where('propriedade', 'ilike', '%' . trim($filters['propriedade']) . '%');
+        }
+        if (!empty($filters['municipio']) && trim($filters['municipio']) !== '') {
+            $municipio = trim($filters['municipio']);
+            $query->whereHas('propriedade', function ($q) use ($municipio) {
+                $q->where('municipio', 'ilike', '%' . $municipio . '%');
+            });
+        }
+
+        if (!empty($sort['field']) && !empty($sort['order'])) {
+            $order = strtolower($sort['order']);
+            if (!in_array($order, ['asc', 'desc'])) {
+                $order = 'asc';
+            }
+
+            if ($sort['field'] === 'propriedade.nome') {
+                $query->join('propriedades', 'unidades_producao.propriedade_id', '=', 'propriedades.id')
+                    ->orderBy('propriedades.nome', $order);
+            } elseif ($sort['field'] === 'propriedade.municipio') {
+                $query->join('propriedades', 'unidades_producao.propriedade_id', '=', 'propriedades.id')
+                    ->orderBy('propriedades.municipio', $order);
+            } else {
+                $query->orderBy($sort['field'], $order);
+            }
+        } else {
+            $query->orderByDesc('created_at');
+        }
+
+        return $query->with('propriedade')->paginate($perPage);
     }
 
     public function find(int $id): ?UnidadeProducao

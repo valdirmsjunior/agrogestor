@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Models\UnidadeProducao;
 use App\Repositories\UnidadeProducaoRepository;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\QueryException;
 
 class UnidadeProducaoService
@@ -15,9 +15,9 @@ class UnidadeProducaoService
         $this->unidadeProducaoRepository = $unidadeProducaoRepository;
     }
 
-    public function getAll(int $perPage = 10)
+    public function getAll(int $perPage = 10, array $filters = [], ?array $sort = null): LengthAwarePaginator
     {
-        return $this->unidadeProducaoRepository->paginate($perPage);
+        return $this->unidadeProducaoRepository->paginateWithFilters($perPage, $filters, $sort);
     }
 
     public function getById(int $id): ?UnidadeProducao
