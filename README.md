@@ -4,6 +4,11 @@ Sistema de gestão agropecuária construído em **Laravel 12 (backend)**, **PHP8
 
 ---
 
+## Telas do Sistema
+```
+Tela Dashboard
+![Dashboard](./img/dashboard.png)
+```
 ## ✅ Funcionalidades Implementadas
 
 ### Backend (Laravel)
