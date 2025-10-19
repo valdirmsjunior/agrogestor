@@ -1,7 +1,6 @@
 <template>
   <RouterView v-if="route.name === 'login'" />
   <div v-if="authStore.isAuthenticated()" class="flex flex-col min-h-screen">
-    <!-- Top Bar -->
     <div class="flex items-center justify-between p-4 bg-white shadow-sm">
       <h1 class="text-xl font-bold text-gray-800">Sistema Agropecuário</h1>
       <UserMenu />

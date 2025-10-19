@@ -1,6 +1,6 @@
 # AgroGestor
 
-Sistema de gestão agropecuária construído em **Laravel 12 (backend)**, **PHP8.2** e **Vue 3 + TypeScript + PrimeVue (frontend)**, combinando robustez e uma interface moderna, conforme os requisitos do teste técnico.
+Sistema de gestão agropecuária construído em **Laravel 12 (backend)**, **PHP8.2** e **Vue 3 + TypeScript + PrimeVue (frontend)**,**Autenticação com Sanctum**,  combinando robustez e uma interface moderna, conforme os requisitos do teste técnico.
 
 ---
 
