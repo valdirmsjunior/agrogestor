@@ -2,7 +2,6 @@
   <div class="p-6 mx-auto max-w-7xl">
     <h1 class="mb-10 text-4xl font-extrabold text-gray-800">Dashboard</h1>
 
-    <!-- Gráfico de Barras (linha única) -->
     <div class="flex flex-col items-center p-8 mb-12 bg-white shadow-xl rounded-xl">
       <h2 class="flex items-center gap-3 mb-6 text-2xl font-semibold text-blue-700">
         <i class="text-3xl text-blue-600 pi pi-map-marker"></i>Propriedades por Município
@@ -18,9 +17,7 @@
       </div>
     </div>
 
-    <!-- Pizza e Rosca lado a lado -->
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
-      <!-- Gráfico de Pizza -->
       <div class="flex flex-col items-center p-8 bg-white shadow-xl rounded-xl">
         <h2 class="flex items-center gap-3 mb-6 text-2xl font-semibold text-green-700">
           <i class="text-3xl text-green-600 pi pi-paw"></i>Animais por Espécie
@@ -36,7 +33,7 @@
           <div v-else class="w-full py-8 text-center text-gray-500">Sem dados</div>
         </div>
       </div>
-      <!-- Gráfico de Rosca -->
+      
       <div class="flex flex-col items-center p-8 bg-white shadow-xl rounded-xl">
         <h2 class="flex items-center gap-3 mb-6 text-2xl font-semibold text-purple-700">
           <i class="text-3xl text-purple-600 pi pi-leaf"></i>Hectares por Cultura
@@ -114,19 +111,16 @@ const loadRelatorios = async () => {
     const datasetHectares = chartData.value.hectares.datasets[0]
 
     chartData.value.propriedades.labels = data.propriedades_por_municipio.map((p: RelatorioPropriedade) => `${p.municipio} - ${p.uf}`)
-    //chartData.value.propriedades.datasets[0].data = data.propriedades_por_municipio.map(p => p.total)
     if (datasetPropriedades) {
       datasetPropriedades.data = data.propriedades_por_municipio.map((p: RelatorioPropriedade) => p.total)
     }
 
     chartData.value.animais.labels = data.animais_por_especie.map((a: RelatorioEspecie) => a.especie)
-    //chartData.value.animais.datasets[0].data = data.animais_por_especie.map(a => a.total)
     if (datasetAnimais) {
       datasetAnimais.data = data.animais_por_especie.map((a: RelatorioEspecie) => a.total)
     }
 
     chartData.value.hectares.labels = data.hectares_por_cultura.map((h: RelatorioCultura) => h.nome_cultura)
-    //chartData.value.hectares.datasets[0].data = data.hectares_por_cultura.map(h => h.total_ha)
     if (datasetHectares) {
       datasetHectares.data = data.hectares_por_cultura.map((h: RelatorioCultura) => h.total_ha)
     }

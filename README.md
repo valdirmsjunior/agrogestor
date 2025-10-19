@@ -1,6 +1,6 @@
 # AgroGestor
 
-Sistema de gestão agropecuária construído em **Laravel 12 (backend)** e **Vue 3 + TypeScript + PrimeVue (frontend)**, combinando robustez e uma interface moderna, conforme os requisitos do teste técnico.
+Sistema de gestão agropecuária construído em **Laravel 12 (backend)**, **PHP8.2** e **Vue 3 + TypeScript + PrimeVue (frontend)**, combinando robustez e uma interface moderna, conforme os requisitos do teste técnico.
 
 ---
 
@@ -42,6 +42,16 @@ cd agrogestor
 ### 2. Suba os containers
 ```
 docker compose up -d
+```
+
+### Altere o .env
+```
+DB_CONNECTION=pgsql
+DB_HOST=db
+DB_PORT=5432
+DB_DATABASE=agro_db
+DB_USERNAME=agro_user
+DB_PASSWORD=agro_pass
 ```
 
 ### 3. Execute as migrações e seeders no backend
@@ -135,5 +145,22 @@ agrogestor/
 - Projeto modular: pode ser facilmente expandido com novas entidades e integrações.
 
 ---
+
+
+## 📦 Versões Utilizadas 
+```
+Este projeto foi desenvolvido e testado com as seguintes versões:
+
+Docker           24.0+
+Docker Compose   v2.20+
+PHP              8.2-fpm
+Laravel          12.x
+PostgreSQL       16-alpine
+Nginx            stable-alpine (1.25.0)
+Node.js          20-alpine
+Vue.js           3.4.x
+PrimeVue         3.50.x
+Tailwind CSS     4.0.0-alpha.x
+PostgreSQL (banco) 16
 
 ```
