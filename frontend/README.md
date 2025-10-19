@@ -1,48 +1,139 @@
-# frontend
+# AgroGestor
 
-This template should help get you started developing with Vue 3 in Vite.
+Sistema de gestão agropecuária construído em **Laravel 12 (backend)** e **Vue 3 + TypeScript + PrimeVue (frontend)**, combinando robustez e uma interface moderna, conforme os requisitos do teste técnico.
 
-## Recommended IDE Setup
+---
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## ✅ Funcionalidades Implementadas
 
-## Recommended Browser Setup
+### Backend (Laravel)
+- CRUD completo para **Produtor Rural**, **Propriedade**, **Unidade de Produção** e **Rebanho**
+- Relacionamentos 1:N entre entidades
+- Autenticação segura com **Sanctum**
+- Relatórios:
+    - Total de propriedades por município
+    - Total de animais por espécie
+    - Total de hectares por cultura
+- Exportação de dados:
+    - Propriedades em **Excel (.xlsx)**
+    - Rebanhos por produtor em **PDF**
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+### Frontend (Vue 3)
+- Interface com **PrimeVue** + **Tailwind CSS**
+- Filtros dinâmicos e paginação em todas as listagens
+- Formulários com validação em tempo real
+- Aplicação responsiva e intuitiva
 
-## Type Support for `.vue` Imports in TS
+---
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## 🚀 Como rodar o projeto
 
-## Customize configuration
+### Pré-requisitos
+- Docker e Docker Compose
+- Git
+- Navegador moderno (Chrome, Firefox, Edge)
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+### 1. Clone o repositório
+```
+git clone https://github.com/valdirmsjunior/agrogestor.git
+cd agrogestor
 ```
 
-### Compile and Hot-Reload for Development
+### 2. Suba os containers
+```
+docker compose up -d
+```
 
-```sh
+### 3. Execute as migrações e seeders no backend
+```
+docker exec -it agro_app php artisan migrate --seed
+```
+
+### 4. Execute o frontend
+```
+cd frontend
+npm install
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+### 5. Acesse a aplicação
+[http://localhost:5173/](http://localhost:5173/)
 
-```sh
-npm run build
+### 6. Credenciais de acesso
+
+- **E-mail:** admin@agro.com  
+- **Senha:** 1q2w3e
+
+---
+
+## 🗂️ Estrutura do Projeto
+
+```
+agrogestor/
+├── backend/                  # Laravel API
+│   ├── app/
+│   │   ├── Http/Controllers/ # Controllers com Service + Repository
+│   │   ├── Models/           # Models relacionais
+│   │   ├── Services/         # Regras de negócio
+│   │   └── Repositories/     # Acesso a dados
+│   ├── database/seeders/     # Seeds de exemplo
+│   └── routes/api.php        # Rotas REST
+├── frontend/                 # Vue 3 + PrimeVue
+│   ├── src/views/            # Listagens e formulários
+│   ├── src/services/         # Consumo de APIs
+│   └── src/composables/      # Hooks e lógica reutilizável
+│   └── vite.config.ts        # Configuração Vite
+├── docker/                   # Configuração Docker
+│   ├── php/Dockerfile        # Imagem PHP customizada
+│   └── nginx/default.conf    # Configuração Nginx
+├── docker-compose.yml        # Orquestração dos serviços
+└── README.md                 # Este arquivo
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+---
 
-```sh
-npm run lint
+## 🛠️ Comandos Úteis
+
+### Backend (Laravel via Docker)
+- **Acessar container:**
+  ```
+  docker exec -it agro_app bash
+  ```
+- **Rodar migrações:**
+  ```
+  php artisan migrate
+  ```
+- **Rodar seeders:**
+  ```
+  php artisan db:seed
+  ```
+- **Ver logs:**
+  ```
+  docker logs agro_app
+  ```
+
+### Docker
+- **Parar todos os serviços:**
+  ```
+  docker-compose down
+  ```
+- **Recriar containers:**
+  ```
+  docker-compose up -d --build
+  ```
+- **Ver status dos containers:**
+  ```
+  docker-compose ps
+  ```
+
+---
+
+## 📝 Observações Importantes
+
+- Todas as rotas de CRUD são protegidas por autenticação via Sanctum.
+- Exportação em Excel e PDF feita diretamente no backend.
+- Projeto modular: pode ser facilmente expandido com novas entidades e integrações.
+
+---
+
 ```
