@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-center items-center min-h-screen bg-gray-50">
+  <div class="flex items-center justify-center min-h-screen bg-gray-50">
     <Card class="w-full max-w-md p-6">
       <template #title>
         <h2 class="text-2xl font-bold text-center text-gray-800">Sistema AgroGestor</h2>
@@ -7,7 +7,7 @@
       <template #content>
         <form @submit.prevent="handleLogin" class="space-y-4">
           <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+            <label for="email" class="block mb-1 text-sm font-medium text-gray-700">E-mail</label>
             <InputText
               id="email"
               v-model="email"
@@ -16,11 +16,11 @@
               :class="{ 'p-invalid': errors.email }"
               required
             />
-            <small v-if="errors.email" class="p-error text-xs">{{ errors.email[0] }}</small>
+            <small v-if="errors.email" class="text-xs p-error">{{ errors.email[0] }}</small>
           </div>
 
           <div>
-            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+            <label for="password" class="block mb-1 text-sm font-medium text-gray-700">Senha</label>
             <InputText
               id="password"
               v-model="password"
@@ -29,7 +29,7 @@
               :class="{ 'p-invalid': errors.password }"
               required
             />
-            <small v-if="errors.password" class="p-error text-xs">{{ errors.password[0] }}</small>
+            <small v-if="errors.password" class="text-xs p-error">{{ errors.password[0] }}</small>
           </div>
 
           <Button
@@ -40,7 +40,7 @@
             :disabled="loading"
           />
         </form>
-        <small v-if="authStore.errorMessage" class="p-error text-xs mt-2 block">
+        <small v-if="authStore.errorMessage" class="block mt-2 text-xs p-error">
           {{ authStore.errorMessage }}
         </small>
       </template>
