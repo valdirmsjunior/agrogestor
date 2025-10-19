@@ -5,10 +5,26 @@ Sistema de gestão agropecuária construído em **Laravel 12 (backend)**, **PHP8
 ---
 
 ## Telas do Sistema
-```
+
 Tela Dashboard
 ![Dashboard](./img/dashboard.png)
-```
+
+Tela de Produtores
+![Produtores](./img/Produtores2.png)
+
+Tela de Propriedades
+![Propriedades](./img/Propriedades.png)
+
+Tela de Unidades de Produção
+![Unidades](./img/Unidades.png)
+
+Tela de Rebanhos
+![Dashboard](./img/Rebanhos.png)
+
+Tela de Relatorios
+![Dashboard](./img/Relatorios.png)
+
+
 ## ✅ Funcionalidades Implementadas
 
 ### Backend (Laravel)
